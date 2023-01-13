@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { CartContext, CartDispatchContext } from "../contexts/cartContext";
+import { CartDispatchContext } from "../contexts/cartContext";
 
 export default function IncreaseDecreaseQuantity({ id, initialQuantity }) {
   const [quantity, setQuantity] = useState(initialQuantity);
   const dispatch = useContext(CartDispatchContext);
-  const cart = useContext(CartContext);
 
   const increase = () => {
     setQuantity(quantity + 1);
@@ -32,7 +31,9 @@ export default function IncreaseDecreaseQuantity({ id, initialQuantity }) {
 
   return (
     <div>
-      <button onClick={decrease}>-</button>
+      <button onClick={decrease} disabled={quantity <= 1}>
+        -
+      </button>
       <span> {quantity} </span>
       <button onClick={increase}>+</button>
     </div>
