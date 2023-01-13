@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import IncreaseDecreaseQuantity from "../components/IncreaseDecreaseQuantity";
 import { CartContext, CartDispatchContext } from "../contexts/cartContext";
 import Alert from "@mui/material/Alert";
+import Skeleton from "@mui/material/Skeleton";
+import Grid from "@mui/material/Grid";
 
 export default function Cart() {
   const cart = useContext(CartContext);
@@ -116,14 +118,41 @@ export default function Cart() {
                   </div>
                 </>
               ) : (
-                <div>Loading...</div>
+                <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
+                  <Grid item xs={3}>
+                    <Skeleton variant="rounded" width="100%" height="10rem" />
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={9}
+                    direction="column"
+                    justifyContent="space-between"
+                  >
+                    <Grid item>
+                      <Skeleton variant="text" height="1.5rem" />
+                      <Skeleton variant="text" width="60%" height="1.5rem" />
+                    </Grid>
+                    <Grid item>
+                      <Skeleton variant="rounded" height="2rem" />
+                    </Grid>
+                  </Grid>
+                </Grid>
               )}
             </div>
           ))}
 
           <div className={styles.cart__total__cost__section}>
             <p>Total cost:</p>
-            {products ? <p> {totalCartCost().toFixed(2)}</p> : null}
+            {products ? (
+              <p> {totalCartCost().toFixed(2)}</p>
+            ) : (
+              <Skeleton
+                variant="text"
+                width={55}
+                sx={{ fontSize: "1.125rem" }}
+              />
+            )}
           </div>
         </>
       )}
