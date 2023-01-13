@@ -1,6 +1,8 @@
+import styles from "../../styles/Product.module.css";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { CartDispatchContext } from "../../contexts/cartContext";
+import Image from "next/image";
 
 export default function Product({ product }) {
   const router = useRouter();
@@ -23,10 +25,38 @@ export default function Product({ product }) {
   }
 
   return (
-    <>
-      <h1>{product.title}</h1>
-      <button onClick={handleAddToCart}>Add to cart</button>
-    </>
+    <section className={styles.product__section}>
+      <div className={styles.product__image__column}>
+        <div className={styles.product__image__container}>
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className={styles.product__image}
+          />
+        </div>
+      </div>
+      <div className={styles.product__details__column}>
+        <div className={styles.product__title__and__price__container}>
+          <h1 className={styles.product__title}>{product.title}</h1>
+          <p className={styles.product__price}>${product.price}</p>
+        </div>
+
+        <div className={styles.product__description}>
+          <h2>Description</h2>
+          <p>{product.description}</p>
+        </div>
+
+        <p className={styles.product__reviews}>
+          {product.rating.count} reviews
+        </p>
+
+        <button className={styles.cta__button} onClick={handleAddToCart}>
+          Add to cart
+        </button>
+      </div>
+    </section>
   );
 }
 

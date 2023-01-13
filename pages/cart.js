@@ -1,3 +1,4 @@
+import styles from "../styles/Cart.module.css";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import IncreaseDecreaseQuantity from "../components/IncreaseDecreaseQuantity";
@@ -56,48 +57,61 @@ export default function Cart() {
   });
 
   return (
-    <>
+    <section className={styles.cart__section}>
       <h1>Cart</h1>
       {cart.length === 0 ? (
         <p>Empty cart</p>
       ) : (
         <>
           {cart.map((item) => (
-            <div key={item.id}>
-              <h2>Item ID: {item.id}</h2>
-              <p>Quantity: {item.quantity}</p>
+            <div key={item.id} className={styles.cart__item__container}>
               {products ? (
                 <>
-                  <p>Details: {itemDetails(item.id).title}</p>
-                  <Image
-                    src={itemDetails(item.id).image}
-                    alt={itemDetails(item.id).title}
-                    width={200}
-                    height={100}
-                  />
-                  <p>Price: ${itemCost(item.id, item.quantity).toFixed(2)}</p>
+                  <div className={styles.cart__item__image__container}>
+                    <Image
+                      src={itemDetails(item.id).image}
+                      alt={itemDetails(item.id).title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className={styles.cart__item__image}
+                    />
+                  </div>
+
+                  <div className={styles.cart__item__title__and__quantity}>
+                    <p>Details: {itemDetails(item.id).title}</p>
+
+                    <IncreaseDecreaseQuantity
+                      id={item.id}
+                      initialQuantity={item.quantity}
+                    />
+                  </div>
+
+                  <div
+                    className={styles.cart__item__price__and__remove__button}
+                  >
+                    <p className={styles.cart__item__price}>
+                      ${itemCost(item.id, item.quantity).toFixed(2)}
+                    </p>
+                    <button
+                      className={styles.remove__item__button}
+                      onClick={() => handleRemoveFromCart(item.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </>
               ) : (
                 <div>Loading...</div>
               )}
-
-              <button onClick={() => handleRemoveFromCart(item.id)}>
-                delete
-              </button>
-
-              <IncreaseDecreaseQuantity
-                id={item.id}
-                initialQuantity={item.quantity}
-              />
             </div>
           ))}
 
-          <h4>
-            Total cost:
-            {products ? <span> {totalCartCost().toFixed(2)}</span> : null}
-          </h4>
+          <div className={styles.cart__total__cost__section}>
+            <p>Total cost:</p>
+            {products ? <p> {totalCartCost().toFixed(2)}</p> : null}
+          </div>
         </>
       )}
-    </>
+    </section>
   );
 }

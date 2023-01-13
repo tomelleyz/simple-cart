@@ -1,3 +1,4 @@
+import styles from "../styles/IncreaseDecreaseQuantity.module.css";
 import { useContext, useEffect, useState } from "react";
 import { CartDispatchContext } from "../contexts/cartContext";
 
@@ -30,7 +31,7 @@ export default function IncreaseDecreaseQuantity({ id, initialQuantity }) {
   }, [quantity, dispatch, id]);
 
   return (
-    <div>
+    <div className={styles.quantity__control}>
       <button onClick={decrease} disabled={quantity <= 1}>
         -
       </button>
