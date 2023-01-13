@@ -3,11 +3,21 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import IncreaseDecreaseQuantity from "../components/IncreaseDecreaseQuantity";
 import { CartContext, CartDispatchContext } from "../contexts/cartContext";
+import Alert from "@mui/material/Alert";
 
 export default function Cart() {
   const cart = useContext(CartContext);
   const dispatch = useContext(CartDispatchContext);
   const [products, setProducts] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const notifyRemoveFromCartIsSuccessful = () => {
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3500);
+  };
 
   const handleRemoveFromCart = (id) => {
     dispatch({
@@ -17,7 +27,7 @@ export default function Cart() {
       },
     });
 
-    console.log("item removed from cart: ", id);
+    notifyRemoveFromCartIsSuccessful();
   };
 
   const itemDetails = (id) => {
@@ -58,6 +68,10 @@ export default function Cart() {
 
   return (
     <section className={styles.cart__section} data-testid="cart-container">
+      {showAlert && (
+        <Alert className={styles.alert}>Item removed from cart</Alert>
+      )}
+
       <h1>Cart</h1>
       {cart.length === 0 ? (
         <p>Empty cart</p>

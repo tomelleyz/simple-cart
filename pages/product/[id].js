@@ -1,12 +1,22 @@
 import styles from "../../styles/Product.module.css";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartDispatchContext } from "../../contexts/cartContext";
 import Image from "next/image";
+import Alert from "@mui/material/Alert";
 
 export default function Product({ product }) {
   const router = useRouter();
   const dispatch = useContext(CartDispatchContext);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const notifyAddToCartIsSuccessful = () => {
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3500);
+  };
 
   const handleAddToCart = () => {
     dispatch({
@@ -17,7 +27,7 @@ export default function Product({ product }) {
       },
     });
 
-    console.log("item added to cart");
+    notifyAddToCartIsSuccessful();
   };
 
   if (router.isFallback) {
@@ -26,6 +36,7 @@ export default function Product({ product }) {
 
   return (
     <section className={styles.product__section}>
+      {showAlert && <Alert className={styles.alert}>Item added to cart</Alert>}
       <div className={styles.product__image__column}>
         <div className={styles.product__image__container}>
           <Image

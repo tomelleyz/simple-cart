@@ -2,6 +2,7 @@
   max-width: 1024px;
   margin: 0 auto;
   padding: 5rem var(--x-axis-section-padding);
+  position: relative;
 }
 
 .cart__section h1 {
@@ -63,4 +64,10 @@
   justify-content: space-between;
   font-weight: 600;
   font-size: 1.125rem;
+}
+
+.alert {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
