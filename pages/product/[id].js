@@ -52,7 +52,11 @@ export default function Product({ product }) {
           {product.rating.count} reviews
         </p>
 
-        <button className={styles.cta__button} onClick={handleAddToCart}>
+        <button
+          className={styles.cta__button}
+          onClick={handleAddToCart}
+          data-testid="add-to-cart-button"
+        >
           Add to cart
         </button>
       </div>

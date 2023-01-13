@@ -26,7 +26,10 @@ export default function Home({ products }) {
           <div className={styles.products__section}>
             {products.map((product) => (
               <div key={product.id} className={styles.product}>
-                <Link href={`/product/${product.id}`}>
+                <Link
+                  href={`/product/${product.id}`}
+                  data-testid={`product-link-${product.id}`}
+                >
                   <div className={styles.product__image__container}>
                     <Image
                       src={product.image}

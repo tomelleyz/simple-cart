@@ -32,11 +32,17 @@ export default function IncreaseDecreaseQuantity({ id, initialQuantity }) {
 
   return (
     <div className={styles.quantity__control}>
-      <button onClick={decrease} disabled={quantity <= 1}>
+      <button
+        onClick={decrease}
+        disabled={quantity <= 1}
+        data-testid="decrease-item-quantity-button"
+      >
         -
       </button>
-      <span> {quantity} </span>
-      <button onClick={increase}>+</button>
+      <span data-testid="item-quantity"> {quantity} </span>
+      <button onClick={increase} data-testid="increase-item-quantity-button">
+        +
+      </button>
     </div>
   );
 }

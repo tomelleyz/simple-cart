@@ -54,10 +54,10 @@ export default function Cart() {
 
   useEffect(() => {
     fetchProducts();
-  });
+  }, []);
 
   return (
-    <section className={styles.cart__section}>
+    <section className={styles.cart__section} data-testid="cart-container">
       <h1>Cart</h1>
       {cart.length === 0 ? (
         <p>Empty cart</p>
@@ -78,7 +78,7 @@ export default function Cart() {
                   </div>
 
                   <div className={styles.cart__item__title__and__quantity}>
-                    <p>Details: {itemDetails(item.id).title}</p>
+                    <p>{itemDetails(item.id).title}</p>
 
                     <IncreaseDecreaseQuantity
                       id={item.id}
@@ -95,6 +95,7 @@ export default function Cart() {
                     <button
                       className={styles.remove__item__button}
                       onClick={() => handleRemoveFromCart(item.id)}
+                      data-testid={`remove-from-cart-button-product-${item.id}`}
                     >
                       Remove
                     </button>
