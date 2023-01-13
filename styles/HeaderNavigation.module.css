@@ -5,13 +5,20 @@
   margin: 0 auto;
   padding: 0 var(--x-axis-section-padding);
   max-width: var(--max-width);
+  position: relative;
 }
 
-.divider {
-  border: none;
-  border-bottom: 1px solid var(--border-color);
-  max-width: var(--max-width);
+.header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: calc(100% - calc(var(--x-axis-section-padding) * 2));
   margin: 0 auto;
+  height: 1px;
+  background-color: var(--border-color);
 }
 
 .link {

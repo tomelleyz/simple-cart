@@ -1,3 +1,4 @@
+import Head from "next/head";
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
@@ -7,7 +8,7 @@ import Alert from "@mui/material/Alert";
 import Skeleton from "@mui/material/Skeleton";
 import Grid from "@mui/material/Grid";
 
-export default function Cart() {
+export default function CartPage() {
   const cart = useContext(CartContext);
   const dispatch = useContext(CartDispatchContext);
   const [products, setProducts] = useState(null);
@@ -69,93 +70,114 @@ export default function Cart() {
   }, []);
 
   return (
-    <section className={styles.cart__section} data-testid="cart-container">
-      {showAlert && (
-        <Alert className={styles.alert}>Item removed from cart</Alert>
-      )}
+    <>
+      <Head>
+        <title>Cart</title>
+        <meta name="description" content="Your shopping cart" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <h1>Cart</h1>
-      {cart.length === 0 ? (
-        <p>Empty cart</p>
-      ) : (
-        <>
-          {cart.map((item) => (
-            <div key={item.id} className={styles.cart__item__container}>
-              {products ? (
-                <>
-                  <div className={styles.cart__item__image__container}>
-                    <Image
-                      src={itemDetails(item.id).image}
-                      alt={itemDetails(item.id).title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className={styles.cart__item__image}
-                    />
-                  </div>
+      <>
+        <section className={styles.cart__section} data-testid="cart-container">
+          {showAlert && (
+            <Alert className={styles.alert}>Item removed from cart</Alert>
+          )}
 
-                  <div className={styles.cart__item__title__and__quantity}>
-                    <p>{itemDetails(item.id).title}</p>
+          <h1>Cart</h1>
+          {cart.length === 0 ? (
+            <p>Empty cart</p>
+          ) : (
+            <>
+              {cart.map((item) => (
+                <div key={item.id} className={styles.cart__item__container}>
+                  {products ? (
+                    <>
+                      <div className={styles.cart__item__image__container}>
+                        <Image
+                          src={itemDetails(item.id).image}
+                          alt={itemDetails(item.id).title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className={styles.cart__item__image}
+                        />
+                      </div>
 
-                    <IncreaseDecreaseQuantity
-                      id={item.id}
-                      initialQuantity={item.quantity}
-                    />
-                  </div>
+                      <div className={styles.cart__item__title__and__quantity}>
+                        <p>{itemDetails(item.id).title}</p>
 
-                  <div
-                    className={styles.cart__item__price__and__remove__button}
-                  >
-                    <p className={styles.cart__item__price}>
-                      ${itemCost(item.id, item.quantity).toFixed(2)}
-                    </p>
-                    <button
-                      className={styles.remove__item__button}
-                      onClick={() => handleRemoveFromCart(item.id)}
-                      data-testid={`remove-from-cart-button-product-${item.id}`}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
-                  <Grid item xs={3}>
-                    <Skeleton variant="rounded" width="100%" height="10rem" />
-                  </Grid>
-                  <Grid
-                    item
-                    container
-                    xs={9}
-                    direction="column"
-                    justifyContent="space-between"
-                  >
-                    <Grid item>
-                      <Skeleton variant="text" height="1.5rem" />
-                      <Skeleton variant="text" width="60%" height="1.5rem" />
+                        <IncreaseDecreaseQuantity
+                          id={item.id}
+                          initialQuantity={item.quantity}
+                        />
+                      </div>
+
+                      <div
+                        className={
+                          styles.cart__item__price__and__remove__button
+                        }
+                      >
+                        <p className={styles.cart__item__price}>
+                          ${itemCost(item.id, item.quantity).toFixed(2)}
+                        </p>
+                        <button
+                          className={styles.remove__item__button}
+                          onClick={() => handleRemoveFromCart(item.id)}
+                          data-testid={`remove-from-cart-button-product-${item.id}`}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <Grid container spacing={{ xs: 1, sm: 2, md: 4 }}>
+                      <Grid item xs={3}>
+                        <Skeleton
+                          variant="rounded"
+                          width="100%"
+                          height="10rem"
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        xs={9}
+                        direction="column"
+                        justifyContent="space-between"
+                      >
+                        <Grid item>
+                          <Skeleton variant="text" height="1.5rem" />
+                          <Skeleton
+                            variant="text"
+                            width="60%"
+                            height="1.5rem"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Skeleton variant="rounded" height="2rem" />
+                        </Grid>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Skeleton variant="rounded" height="2rem" />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              )}
-            </div>
-          ))}
+                  )}
+                </div>
+              ))}
 
-          <div className={styles.cart__total__cost__section}>
-            <p>Total cost:</p>
-            {products ? (
-              <p> {totalCartCost().toFixed(2)}</p>
-            ) : (
-              <Skeleton
-                variant="text"
-                width={55}
-                sx={{ fontSize: "1.125rem" }}
-              />
-            )}
-          </div>
-        </>
-      )}
-    </section>
+              <div className={styles.cart__total__cost__section}>
+                <p>Total cost:</p>
+                {products ? (
+                  <p> {totalCartCost().toFixed(2)}</p>
+                ) : (
+                  <Skeleton
+                    variant="text"
+                    width={55}
+                    sx={{ fontSize: "1.125rem" }}
+                  />
+                )}
+              </div>
+            </>
+          )}
+        </section>
+      </>
+    </>
   );
 }

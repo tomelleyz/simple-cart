@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }) {
   return (
     <CartContext.Provider value={cart}>
       <CartDispatchContext.Provider value={dispatch}>
-        <main className="inter.className">
+        <main className={inter.className}>
           <HeaderNavigation />
           <Component {...pageProps} />
         </main>
