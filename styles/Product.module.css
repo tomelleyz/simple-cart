@@ -5,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   row-gap: 3rem;
-  position: relative;
 }
 
 .product__image__column {
@@ -86,9 +85,10 @@
 }
 
 .alert {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
 }
 
 @media (max-width: 767.98px) {

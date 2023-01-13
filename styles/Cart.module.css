@@ -2,7 +2,6 @@
   max-width: 1024px;
   margin: 0 auto;
   padding: 5rem var(--x-axis-section-padding);
-  position: relative;
 }
 
 .cart__section h1 {
@@ -67,7 +66,8 @@
 }
 
 .alert {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
 }
